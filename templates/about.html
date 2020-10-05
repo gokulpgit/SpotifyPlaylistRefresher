@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Spotify Playlist Refresher</title>
+    <!-- styling -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+  </head>
+
+  <body>
+    <header id="main-header">
+      <div class="container">
+        <h1>Spotify Playlist Refresher</h1>
+      </div>
+    </header>
+
+    <nav id="navbar">
+      <div class="container">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a id="mod_login" href="/refresher">Login</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+        <br><br>
+        <p>
+            <img id="Gokul-img" src="/images/Gokul.jpg" alt="Gokul Pillai"/>
+        </p>
+        <p style="font-size: 18px;">
+            Spotify Playlist Refresher is written by Gokul Pillai. The inspiration behind creating this application was due to the increasing number of large and outdated playlists in my collection. I would often find myself skipping song after song while listening to my playlists due to their age, so I wanted to create something that would allow me to identify and delete those songs.
+
+            <br><br><b>
+            How the algorithm works:
+            <br></b>
+            It utilizes Spotify’s API to authorize access to the user’s playlists, top tracks, and top artists.  Once the user has chosen the playlist they would like to refresh, the algorithm parses every song in the playlist and displays the ones that do not either fall into the user’s top tracks or are by the user’s top artists
+
+            <br><br><b>
+            Source Code:
+            <br>
+            <a href="https://github.com/gokulpgit/SpotifyPlaylistRefresher">https://github.com/gokulpgit/SpotifyPlaylistRefresher</a>
+        </p>
+
+        <script>
+        var username = '{{ username }}';
+
+        if (username != "") {
+            document.getElementById('mod_login').innerHTML = "<a id='mod_login' href='/logout'>Logout</a>";
+        }
+        </script>
+    </div>
+  </body>
+</html>

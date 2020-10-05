@@ -1,0 +1,100 @@
+<html>
+  <head>
+    <title>Spotify Playlist Refresher</title>
+    <!-- styling -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+  </head>
+
+  <body>
+    <header id="main-header">
+      <div class="container">
+        <h1>Spotify Playlist Refresher</h1>
+      </div>
+    </header>
+
+    <nav id="navbar">
+      <div class="container">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a href="/logout">Logout</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+
+        <b>After choosing a playlist, select all the songs you would like to delete.</b>
+
+        <form method = "POST">
+            {{ form.playlist }}
+            {{ form.song }}
+            <input style="color:#ffff;background-color:#800000;font-size:20px;position:fixed;border:none;left:10px;top:200px;border-radius:25px;cursor:pointer;" value="Delete" type = "submit">
+            <input style="color:#ffff;background-color:#800000;font-size:16px;position:fixed;border:none;left:10px;top:250px;border-radius:25px;cursor:pointer;" type = "button" value="Select All" onclick="SetAll(true)">
+            <input style="color:#ffff;background-color:#800000;font-size:16px;position:fixed;border:none;left:10px;top:280px;border-radius:25px;cursor:pointer;" type = "button" value="Clear All" onclick="SetAll(false)">
+        </form>
+    </div>
+
+
+        <!-- used to update the checkboxes based on what playlist was chosen -->
+        <script>
+        let playlist_select = document.getElementById('playlist');
+        let song_select = document.getElementById('song');
+        let username = '{{ session['username'] }}';
+
+        playlist_select.onchange = function() {
+            playlist = playlist_select.value;
+            console.log("GOPU:playlist:username=", username);
+        
+            fetch('/song/' + playlist, { credentials: 'include' }).then(function(response) {
+            response.json().then(function(data) {
+                let optionHTML = '';
+                var counter = 0;
+                optionHTML += '<ul class="songlist">';
+                for(let song of data.songs) {
+                    optionHTML += '<li><input type="checkbox" value="' + song.song_uri + '" name="mycheckbox">' + song.song_name + '</li>';
+                    counter += 1
+                }
+                optionHTML += '</ul>';
+                console.log(optionHTML)
+                song_select.innerHTML = optionHTML;
+            });
+            });
+        }
+
+        function SetAll(checked) {
+            console.log("GOPU:SetAll START, checked=", checked);
+            var songs = document.getElementsByName('mycheckbox');
+            var n = songs.length;
+
+            for (var i = 0; i < n; i++) {
+                songs[i].checked = checked;
+            }
+        }
+
+        window.onload = function () {
+            var time;
+            window.onload = resetTimer;
+            // DOM Events
+            document.onload = resetTimer;
+            document.onmousemove = resetTimer;
+            document.onmousedown = resetTimer;
+            document.ontouchstart = resetTimer;
+            document.onclick = resetTimer;
+            document.onkeypress = resetTimer;
+
+            function logout() {
+                location.href = '/logout'
+            }
+
+            function resetTimer() {
+                clearTimeout(time);
+                // 1000 milliseconds = 1 second
+                // 3 minutes of idle timeout
+                time = setTimeout(logout, 3 * 60 * 1000)
+            }
+        };
+        </script>
+  </body>
+</html>

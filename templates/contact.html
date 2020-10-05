@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Spotify Playlist Refresher</title>
+    <!-- styling -->
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+  </head>
+
+  <body>
+    <header id="main-header">
+      <div class="container">
+        <h1>Spotify Playlist Refresher</h1>
+      </div>
+    </header>
+
+    <nav id="navbar">
+      <div class="container">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/about">About</a></li>
+          <li><a href="/contact">Contact</a></li>
+          <li><a id="mod_login" href="/refresher">Login</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <div class="container">
+        <br><br>
+        <p style="font-size: 18px;">
+            <h2><b>Gokul Pillai</h2><br>
+            <b><a href="mailto:pillaig@uci.edu">pillaig@uci.edu</a>
+        </p>
+
+        <script>
+        var username = '{{ username }}';
+
+        if (username != "") {
+            document.getElementById('mod_login').innerHTML = "<a id='mod_login' href='/logout'>Logout</a>";
+        }
+        </script>
+    </div>
+  </body>
+</html>
